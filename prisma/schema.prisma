@@ -42,7 +42,7 @@ enum MemberType {
 model Players {
   id Int @id @default(autoincrement())
 
-  member   Members @relation(fields: [memberId], references: [id])
+  member   Members @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId Int     @unique
 
   matches   Int
