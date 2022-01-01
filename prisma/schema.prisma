@@ -23,7 +23,7 @@ model Members {
   age Int
 
   type   MemberType
-  team   Teams      @relation(fields: [teamId], references: [id])
+  team   Teams      @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId Int
 
   status Int

@@ -110,7 +110,7 @@ fcm-config.json
 aws-sms-config.js
 
 #uploads
-/public/uploads
+/public
 
 # prisma migrations
 /prisma/migrations
