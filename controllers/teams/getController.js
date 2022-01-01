@@ -4,10 +4,7 @@ const prisma= new PrismaClient();
 const getController = async (req, res, next) => {
     try {
         const resp=await prisma.teams.findMany({
-            select:{
-                id:true,
-                name:true,
-                status:true,
+            include:{
                 members:{
                     include:{
                         player:true
