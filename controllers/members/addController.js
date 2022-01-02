@@ -10,12 +10,24 @@ const addController = async (req, res, next) => {
             members: req.body.members
         })
 
-        
-        // TODO: return team Data.
+        const teamData=await prisma.teams.findFirst({
+            where:{
+                id:req.body.teamId
+            },
+            include:{
+                members:{
+                    include:{
+                        player:true
+                    }
+                }
+            }
+        });
+
         res.statusCode=201;
         res.json({
             "message":"Member Added!",
-            data: resp
+            data: resp,
+            team:teamData
         });
     } catch (error) {
         res.statusCode=400,
