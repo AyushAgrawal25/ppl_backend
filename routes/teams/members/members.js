@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const deleteController = require('../../../controllers/teams/members/deleteController');
-const addController = require('../../../controllers/teams/members/addController');
+const deleteController = require('../../../controllers/members/deleteController');
+const addController = require('../../../controllers/members/addController');
 
 const router = Router()
 

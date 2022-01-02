@@ -74,7 +74,6 @@ const addMemberUtil = async ({
             data: membersInfo
         });
 
-
         const playersProms=[];
         playersInfo.forEach(async (playerInfo)=>{
             const prom=new Promise(async(resolve) =>{

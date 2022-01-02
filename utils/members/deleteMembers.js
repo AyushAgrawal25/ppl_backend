@@ -16,6 +16,7 @@ const deleteMembers = async ({
 
         return resp;
     } catch (error) {
+        console.log(error)
         throw {
             message: "Deletion Failed!",
             error: error
