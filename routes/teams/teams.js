@@ -3,6 +3,8 @@ const path = require("path");
 const multer = require('multer');
 
 const members=require('./members/members');
+const logos=require('./logos/logos');
+
 const createController = require('../../controllers/teams/createController');
 const deleteController = require('../../controllers/teams/deleteController');
 const getController = require('../../controllers/teams/getController');
@@ -23,6 +25,7 @@ const upload = multer({
 });
 
 router.use('/members', members);
+router.use('/logos', logos);
 
 router.get('/', getController);
 router.post('/create', upload.single('image'), createController);

@@ -10,6 +10,7 @@ generator client {
 model Teams {
   id      Int       @id @default(autoincrement())
   name    String    @unique @db.VarChar(255)
+  logoFile String? @unique @db.VarChar(255)
   status  Int
   members Members[]
 }

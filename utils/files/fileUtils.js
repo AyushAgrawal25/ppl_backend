@@ -7,6 +7,7 @@ const renameFunction=async(orgPath, onlyPath, newName)=>{
     try {
         let newPath=onlyPath+"/"+newName+"."+extName;
         await fs.renameSync(orgPath, newPath);
+        return newName+"."+extName;
     } catch (error) {
         console.log(error);
         throw error;

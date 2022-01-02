@@ -1,26 +1,20 @@
 const { PrismaClient } = require("@prisma/client");
-const fileUtils = require("../../routes/files/fileUtils");
+const fileUtils = require("../../utils/files/fileUtils");
 const addMemberUtil = require("../../utils/members/addMembers");
 
 const prisma = new PrismaClient();
 
 const createController = async (req, res, next) => {
     try {
-        // TODO: test with flutter andchange accordingly.
-        // TEMP Code.
         req.body=JSON.parse(req.body.data);
-        // console.log(req.file)
-
         let resp = {};
         try {
-            resp = await prisma.teams.create({
+            let resp = await prisma.teams.create({
                 data: {
                     name: req.body.name,
                     status: 1
                 }
-            });
-
-            
+            });       
         } catch (error) {
             res.statusCode = 400,
                 res.json({
@@ -30,11 +24,20 @@ const createController = async (req, res, next) => {
             return;
         }
         
-        try {
-            await fileUtils.rename(req.file.path, req.file.destination, resp.id)
-        } catch (error) {
-            // TODO: delete Image if wanted.
-            console.log(error)   
+        if((req.file!=undefined)&&(req.file!=null)){
+            try {
+                let newName=await fileUtils.rename(req.file.path, req.file.destination, resp.id)
+                await prisma.teams.update({
+                    where:{
+                        id:resp.id
+                    },
+                    data:{
+                        logoFile:newName
+                    }
+                });
+            } catch (error) {
+                console.log(error)   
+            }
         }
 
         try {
@@ -46,7 +49,7 @@ const createController = async (req, res, next) => {
             resp['members'] = memberAddition;
         } catch (error) {
             console.log(error);
-            res.statusCode = 400,
+            res.statusCode = 205,
                 res.json({
                     message: "Team Created but Member Addition Failed!",
                     error: error,
@@ -54,6 +57,8 @@ const createController = async (req, res, next) => {
             return;
         }
 
+        
+        // TODO: return team Data.
         res.statusCode = 201;
         res.json({
             "message": "Team Created!",
